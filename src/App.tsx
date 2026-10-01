@@ -213,12 +213,10 @@ export const App: React.FC = () => {
         )}
       </div>
 
-      {errorMessage && (
-              <TodoError
-        message={errorMessage || ''}
-        onHide={handleHideError}
-      />
-      )}
+<TodoError
+  message={errorMessage || ''}
+  onHide={handleHideError}
+/>
     </div>
   );
-};
+}
