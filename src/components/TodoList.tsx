@@ -37,13 +37,7 @@ export const TodoList: React.FC<Props> = ({
         />
       ))}
 
-      {tempTodo && (
-        <TodoItem
-          key={tempTodo.id}
-          todo={tempTodo}
-          isProcessed
-        />
-      )}
+      {tempTodo && <TodoItem key={tempTodo.id} todo={tempTodo} isProcessed />}
     </section>
   );
 };

@@ -60,9 +60,7 @@ export const TodoFooter: React.FC<Props> = ({
               filter === currentFilter.value ? 'selected' : ''
             }`}
             data-cy={currentFilter.dataCy}
-            onClick={event =>
-              handleFilterClick(event, currentFilter.value)
-            }
+            onClick={event => handleFilterClick(event, currentFilter.value)}
           >
             {currentFilter.label}
           </a>

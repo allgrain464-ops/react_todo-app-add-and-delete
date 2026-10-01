@@ -10,16 +10,9 @@ type Props = {
   onDelete?: () => void;
 };
 
-export const TodoItem: React.FC<Props> = ({
-  todo,
-  isProcessed,
-  onDelete,
-}) => {
+export const TodoItem: React.FC<Props> = ({ todo, isProcessed, onDelete }) => {
   return (
-    <div
-      data-cy="Todo"
-      className={`todo ${todo.completed ? 'completed' : ''}`}
-    >
+    <div data-cy="Todo" className={`todo ${todo.completed ? 'completed' : ''}`}>
       <label className="todo__status-label">
         <input
           data-cy="TodoStatus"

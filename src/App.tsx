@@ -1,11 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { UserWarning } from './UserWarning';
-import {
-  USER_ID,
-  addTodo,
-  deleteTodo,
-  getTodos,
-} from './api/todos';
+import { USER_ID, addTodo, deleteTodo, getTodos } from './api/todos';
 import { Todo } from './types/Todo';
 import { Filter } from './types/Filter';
 import { TodoList } from './components/TodoList';
@@ -82,9 +77,7 @@ export const App: React.FC = () => {
     setErrorMessage(null);
   };
 
-  const handleTitleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
 
@@ -149,30 +142,28 @@ export const App: React.FC = () => {
 
     setDeletingTodoIds(completedIds);
 
-    Promise.allSettled(
-      completedTodos.map(todo => deleteTodo(todo.id)),
-    ).then(results => {
-      const successfullyDeletedIds = completedIds.filter(
-        (_id, index) => results[index].status === 'fulfilled',
-      );
-
-      if (successfullyDeletedIds.length > 0) {
-        setTodos(currentTodos =>
-          currentTodos.filter(
-            todo => !successfullyDeletedIds.includes(todo.id),
-          ),
+    Promise.allSettled(completedTodos.map(todo => deleteTodo(todo.id))).then(
+      results => {
+        const successfullyDeletedIds = completedIds.filter(
+          (_id, index) => results[index].status === 'fulfilled',
         );
-      }
 
-      if (
-        results.some(result => result.status === 'rejected')
-      ) {
-        setErrorMessage('Unable to delete a todo');
-      }
+        if (successfullyDeletedIds.length > 0) {
+          setTodos(currentTodos =>
+            currentTodos.filter(
+              todo => !successfullyDeletedIds.includes(todo.id),
+            ),
+          );
+        }
 
-      setDeletingTodoIds([]);
-      inputRef.current?.focus();
-    });
+        if (results.some(result => result.status === 'rejected')) {
+          setErrorMessage('Unable to delete a todo');
+        }
+
+        setDeletingTodoIds([]);
+        inputRef.current?.focus();
+      },
+    );
   };
 
   return (
@@ -223,10 +214,10 @@ export const App: React.FC = () => {
       </div>
 
       {errorMessage && (
-        <TodoError
-          message={errorMessage}
-          onHide={handleHideError}
-        />
+              <TodoError
+        message={errorMessage || ''}
+        onHide={handleHideError}
+      />
       )}
     </div>
   );
