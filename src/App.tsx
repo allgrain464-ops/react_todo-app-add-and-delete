@@ -111,7 +111,10 @@ export const App: React.FC = () => {
       })
       .finally(() => {
         setTempTodo(null);
-        inputRef.current?.focus();
+
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 0);
       });
   };
 

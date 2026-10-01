@@ -11,15 +11,15 @@ export const TodoItem: React.FC<Props> = ({ todo, isProcessed, onDelete }) => {
   return (
     <div data-cy="Todo" className={`todo ${todo.completed ? 'completed' : ''}`}>
       <div className="todo__status-label">
-  <input
-    data-cy="TodoStatus"
-    type="checkbox"
-    className="todo__status"
-    checked={todo.completed}
-    readOnly
-    aria-label={`Mark "${todo.title}" as completed`}
-  />
-</div>
+        <input
+          data-cy="TodoStatus"
+          type="checkbox"
+          className="todo__status"
+          checked={todo.completed}
+          readOnly
+          aria-label={`Mark "${todo.title}" as completed`}
+        />
+      </div>
 
       <span data-cy="TodoTitle" className="todo__title">
         {todo.title}
