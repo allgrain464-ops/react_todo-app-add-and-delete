@@ -3,18 +3,24 @@ import { client } from '../utils/fetchClient';
 
 export const USER_ID = 4515;
 
-export const getTodos = () => {
+type NewTodo = {
+  userId: number;
+  title: string;
+  completed: boolean;
+};
+
+export const getTodos = (): Promise<Todo[]> => {
   return client.get<Todo[]>(`/todos?userId=${USER_ID}`);
 };
 
-export const addTodo = (title: string) => {
-  return client.post<Todo>('/todos', {
+export const addTodo = (title: string): Promise<Todo> => {
+  return client.post<Todo, NewTodo>('/todos', {
     userId: USER_ID,
     title,
     completed: false,
   });
 };
 
-export const deleteTodo = (todoId: number) => {
-  return client.delete(`/todos/${todoId}`);
+export const deleteTodo = (todoId: number): Promise<Todo> => {
+  return client.delete<Todo>(`/todos/${todoId}`);
 };

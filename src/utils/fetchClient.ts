@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 const BASE_URL = 'https://mate.academy/students-api';
 
 // returns a promise resolved after a given delay
-function wait(delay: number) {
+function wait(delay: number): Promise<void> {
   return new Promise(resolve => {
     setTimeout(resolve, delay);
   });
@@ -11,10 +10,10 @@ function wait(delay: number) {
 // To have autocompletion and avoid mistypes
 type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
-function request<T>(
+function request<T, D = null>(
   url: string,
   method: RequestMethod = 'GET',
-  data: any = null, // we can send any data to the server
+  data: D = null as D,
 ): Promise<T> {
   const options: RequestInit = { method };
 
@@ -39,8 +38,13 @@ function request<T>(
 }
 
 export const client = {
-  get: <T>(url: string) => request<T>(url),
-  post: <T>(url: string, data: any) => request<T>(url, 'POST', data),
-  patch: <T>(url: string, data: any) => request<T>(url, 'PATCH', data),
-  delete: (url: string) => request(url, 'DELETE'),
+  get: <T>(url: string): Promise<T> => request<T>(url),
+
+  post: <T, D>(url: string, data: D): Promise<T> =>
+    request<T, D>(url, 'POST', data),
+
+  patch: <T, D>(url: string, data: D): Promise<T> =>
+    request<T, D>(url, 'PATCH', data),
+
+  delete: <T>(url: string): Promise<T> => request<T>(url, 'DELETE'),
 };
